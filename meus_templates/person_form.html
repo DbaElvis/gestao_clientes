@@ -10,27 +10,12 @@
 <body>
 
       <form method="POST" enctype="multipart/form-data">-->
-         {% csrf_token %}-->
-         {{ form|bootstrap }}-->
-         <button type="submit" class="btn btn-primary">Salvar</button>-->
+            {% csrf_token %}
+            {{ form }}
+            <button type="submit" class="btn btn-primary">Salvar</button>
       </form>
 
 </body>
 </html>
 
 
-
-
-<!--{% extends 'base.html' %}-->
-<!--{% load bootstrap %}-->
-
-<!--{% block title %} Administracao {% endblock %}-->
-
-<!--{% block main %}-->
-<!--    <h3>Novo cliente</h3>-->
-<!--    <form method="POST" enctype="multipart/form-data">-->
-<!--        {% csrf_token %}-->
-<!--        {{ form|bootstrap }}-->
-<!--        <button type="submit" class="btn btn-primary">Salvar</button>-->
-<!--    </form>-->
-<!--{% endblock %}-->
