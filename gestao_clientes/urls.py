@@ -6,7 +6,7 @@ from clientes import urls as clientes_urls
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('clientes/', include(clientes_urls)),
+    path('person/', include(clientes_urls)),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 # from django.contrib import admin
