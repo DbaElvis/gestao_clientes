@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'bootstrapform',
     'clientes',
     'home',
 ]
@@ -138,9 +139,6 @@ LOGIN_REDIRECT_URL = 'person_list'
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
-
-
-
-# STATICFILES_DIRS = [
-#     'estaticos',
-# ]
+STATICFILES_DIRS = [
+  'statics',
+]
