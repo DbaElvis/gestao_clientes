@@ -5,7 +5,19 @@
 
 {% block main %}
 
-    <div class="row">
+
+     <div class="row">
+        <div class="col-12">
+            <form action="" class="form-group">
+                <input type="text" name="pesquisa" class="form-control">
+                <button>Pesquisar</button>
+            </form>
+        </div>
+     </div>
+
+
+
+         <div class="row">
         <div class="col">
 
         </div>
@@ -32,7 +44,7 @@
 
         <div class="col">
             {% if user.is_authenticated %}
-                <p>Ola {{user.username }}
+                <p>Ola {{user.username }} , seja bem vindo a nossa app -
                     <a href="{% url 'logout' %}">
                         <span class="badge badge-dark">Sair</span>
                     </a>
