@@ -72,7 +72,7 @@ class PersonList(LoginRequiredMixin, ListView):
         primeiro_acesso = self.request.session.get('primeiro_acesso', False)
 
         if not primeiro_acesso:
-            context['message'] = 'Seja bem vindo ao seu primeiro acesso hoje'
+            context['message'] = 'Seja bem vindo ao seu primeiro acesso hoje fique a vontade'
             self.request.session['primeiro_acesso'] = True
         else:
             context['message'] = 'Você já acessou hoje'
