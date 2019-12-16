@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block main %}
+<h2>Dash Board</h2>
+  <ul>
+    <li>Valor médio: R$ {{ media|floatformat:2 }}</li>
+    <li>Desconto médio: R$ {{ media_desc|floatformat:2 }}</li>
+    <li>Valor Minimo: R$ {{ min|floatformat:2  }}</li>
+    <li>Valor Maximo: R$ {{ max|floatformat:2  }}</li>
+    <li>Valor Total: R$ {{ soma|floatformat:2  }}</li>
+    <li>Nº Pedidos: {{ n_count }}</li>
+    <li>Notas Emitidas: {{ n_count_nfe }}</li>
+  </ul>
+{% endblock main %}

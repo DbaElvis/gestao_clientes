@@ -1,0 +1,7 @@
+<h3>Listagem de Pessoas</h3>
+
+<h4>Informe aqui o nome do novo usuario</h4>
+
+<a href="{% url 'person_create_cbv' %}">Novo Usuario</a><br><br> {% for person in object_list %}
+
+<a href="{% url 'person_detail_cbv' person.id %}">{{ person }}</a><br><br> {% endfor %}

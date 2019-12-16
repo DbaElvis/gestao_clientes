@@ -1,0 +1,45 @@
+{% extends 'base.html' %} {% load my_tags %} {% block title %} Administracao {% endblock %} {% block main %}
+
+<div class="row">
+    <div class="col">
+        {% footer_message %}
+        <h5>{{ qtd }}</h5>
+    </div>
+
+    <div class="col-6">
+        <h3>Listagem de clientes </h3>
+        <ul class="list-group">
+            <p>{{ message }}</p>
+            {% for person in object_list %}
+            <li class="list-group-item">
+                <a href="{% url 'person_update_cbv' person.pk %}">{{ person.nome_completo|title }}</a>
+                <a href="{% url 'person_delete_cbv' person.pk %}" class="trash-item">
+                    <i class="fa fa-trash" aria-hidden="true"></i>
+                </a>
+            </li>
+            {% empty %}
+            <h4>Desculpe, essa pessoa não consta na lista!!!</h4>
+            {% endfor %}
+        </ul>
+
+        <br>
+
+        <a href="{% url 'person_create_cbv' %}" class="btn btn-primary"> Novo cliente</a>
+        <a href="{% url 'vendas:dash' %}" class="btn btn-primary"> Vendas</a><br>
+        {% now "SHORT_DATETIME_FORMAT" %}
+    </div>
+
+    <div class="col">
+        {% if user.is_authenticated %}
+        <p>{{ request.session.message }}
+            <a href="{% url 'logout' %}">
+                <span class="badge badge-dark">Sair</span>
+            </a>
+        </p>
+
+        {% endif %}
+    </div>
+</div>
+
+
+{% endblock %} {% block footer %} {% include 'clientes/footer.html' %} {% endblock %}
