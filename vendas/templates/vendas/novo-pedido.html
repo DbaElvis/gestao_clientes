@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block main %}
+<h2>Novo Pedido</h2>
+  <form method="POST" action="{% url 'vendas:novo_pedido' %}">
+    {% csrf_token %}
+    <h3>Cabeçalho Pedido numero: {{ venda.numero }}</h3>
+    <input type="text" name="numero" class="form-control" value="{{numero}}"
+            placeholder="Numero" required=True>
+
+    <label for="desconto">Desconto</label><br>
+    <input type="text" name="desconto" id="desconto" value="{{desconto}}"
+            placeholder="Desconto" class="form-control" required=True>
+
+    <input type="hidden" value="{{venda.id}}" name="venda_id">
+    <br>
+    <button type="submit" class="btn btn-main">Enviar</button>
+  </form>
+{% endblock main %}
+
+{% block extra %}
+
+{% if venda %}
+  <form action="{% url 'vendas:novo_item_pedido' venda.id %}" method="POST">
+    {% csrf_token %}
+    {{ form_item }}
+  <button class="btn btn-info">Incluir</button>
+</form>
+
+  <h2>Listagem de itens</h2>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Descrição</th>
+        <th scope="col">Quantidade</th>
+        <th scope="col">Desconto</th>
+        <th scope="col">Excluir</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in itens %}
+        <tr>
+          <td>{{ item.id }}</td>
+          <td>{{ item.produto.descricao }}</td>
+          <td>{{ item.qtd }}</td>
+          <td>{{ item.desconto }}</td>
+          <td scope="col">
+            <a href="{% url 'vendas:delete_item_pedido' item.id %}">Excluir</a>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% endif %}
+{% endblock extra %}

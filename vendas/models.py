@@ -7,7 +7,7 @@ from produtos.models import Produto
 from .managers import VendaManager
 
 class Venda(models.Model):
-    numero = models.CharField(max_length=7)
+    numero = models.DecimalField(max_digits=4, decimal_places=0)
     valor = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True)
     desconto = models.DecimalField(max_digits=5, decimal_places=2, default=0)
     impostos = models.DecimalField(max_digits=5, decimal_places=2, default=0)

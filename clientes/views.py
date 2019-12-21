@@ -15,54 +15,6 @@ from django.views.generic.edit import DeleteView
 from django.urls import reverse_lazy
 from django.http import HttpResponse
 
-# @login_required
-# def persons_list(request):
-#     persons = Person.objects.all()
-#     qtd = Person.objects.all().count()
-#
-#     context = {
-#             'persons': persons,
-#             'qtd': qtd,
-#      }
-#
-#     return render(request, 'clientes/person.html', context )
-#
-#
-# @login_required
-# def persons_new(request):
-#     if not request.user.has_perm('clientes.add_person'):
-#         return HttpResponse('<h2>Nao Autorizado</h2>')
-#     # elif not request.user.is_superuser:
-#     #     return HttpResponse('<h2>Nao é super Usuario</h2>')
-#     form = PersonForm(request.POST or None, request.FILES or None)
-#     footer_message = "Novo Cliente - Django WEB"
-#     if form.is_valid():
-#         form.save()
-#         return redirect('person_list')
-#     return render(request, 'clientes/person_form.html', {'form': form, 'footer_message': footer_message })
-#
-#
-# @login_required
-# def persons_update(request, id):
-#     person = get_object_or_404(Person, pk=id)
-#     form = PersonForm(request.POST or None, request.FILES or None, instance=person)
-#
-#     if form.is_valid():
-#         form.save()
-#         return redirect('person_list')
-#
-#     return render(request, 'clientes/person_form.html', {'form': form})
-
-
-# @login_required
-# def persons_delete(request, id):
-#     person = get_object_or_404(Person, pk=id)
-#
-#     if request.method == 'POST':
-#         person.delete()
-#         return redirect('person_list')
-#
-#     return render(request, 'clientes/person_delete_confirm.html', {'person': person})
 
 class PersonList(LoginRequiredMixin, ListView):
     model = Person
@@ -72,7 +24,7 @@ class PersonList(LoginRequiredMixin, ListView):
         primeiro_acesso = self.request.session.get('primeiro_acesso', False)
 
         if not primeiro_acesso:
-            context['message'] = 'Seja bem vindo ao seu primeiro acesso hoje fique a vontade'
+            context['message'] = 'Seja bem vindo ao seu primeiro acesso Hoje'
             self.request.session['primeiro_acesso'] = True
         else:
             context['message'] = 'Você já acessou hoje'
@@ -134,6 +86,54 @@ class ProdutoBulk(View):
         return HttpResponse("bulk_create")
 
 
+# @login_required
+# def persons_list(request):
+#     persons = Person.objects.all()
+#     qtd = Person.objects.all().count()
+#
+#     context = {
+#             'persons': persons,
+#             'qtd': qtd,
+#      }
+#
+#     return render(request, 'clientes/person.html', context )
+#
+#
+# @login_required
+# def persons_new(request):
+#     if not request.user.has_perm('clientes.add_person'):
+#         return HttpResponse('<h2>Nao Autorizado</h2>')
+#     # elif not request.user.is_superuser:
+#     #     return HttpResponse('<h2>Nao é super Usuario</h2>')
+#     form = PersonForm(request.POST or None, request.FILES or None)
+#     footer_message = "Novo Cliente - Django WEB"
+#     if form.is_valid():
+#         form.save()
+#         return redirect('person_list')
+#     return render(request, 'clientes/person_form.html', {'form': form, 'footer_message': footer_message })
+#
+#
+# @login_required
+# def persons_update(request, id):
+#     person = get_object_or_404(Person, pk=id)
+#     form = PersonForm(request.POST or None, request.FILES or None, instance=person)
+#
+#     if form.is_valid():
+#         form.save()
+#         return redirect('person_list')
+#
+#     return render(request, 'clientes/person_form.html', {'form': form})
+
+
+# @login_required
+# def persons_delete(request, id):
+#     person = get_object_or_404(Person, pk=id)
+#
+#     if request.method == 'POST':
+#         person.delete()
+#         return redirect('person_list')
+#
+#     return render(request, 'clientes/person_delete_confirm.html', {'person': person})
 
 
 
