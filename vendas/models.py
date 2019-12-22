@@ -24,6 +24,9 @@ class Venda(models.Model):
 
         )
 
+    def get_raw_vendas(self):
+        return Venda.objects.raw('select * from vendas_venda where id = %s', ['7',])    
+
     def calcular_total(self):
         tot = self.itempedido_set.all().aggregate(
             tot_ped=Sum((F('qtd') * F('produto__preco')) - F('desconto'), output_field=FloatField())
@@ -38,7 +41,6 @@ class Venda(models.Model):
     #         tot += produto.preco
     #     return (tot - self.desconto) - self.impostos
 
-
     def __str__(self):
         return self.numero
 
@@ -49,7 +51,7 @@ class ItemPedido(models.Model):
     desconto = models.DecimalField(max_digits=5, decimal_places=2, default=0)
 
     def __str__(self):
-        return '{}  - {}  -  {}'.format(self.venda.numero, self.qtd, self.produto.descricao)
+        return '{}  -  {}'.format(self.venda.numero, self.produto.descricao)
 
 
 @receiver(post_save, sender=ItemPedido)

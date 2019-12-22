@@ -1,10 +1,13 @@
 {% extends 'base.html' %}
+{% load bootstrap %}
 
 {% block main %}
-<h2>Novo Pedido</h2>
+<div class="row">
+  <div class="col-4">
+  <h4>Novo Pedido</h4>
   <form method="POST" action="{% url 'vendas:novo_pedido' %}">
     {% csrf_token %}
-    <h3>Cabeçalho Pedido numero: {{ venda.numero }}</h3>
+    <h5>Pedido numero: {{ venda.numero }}</h5>
     <input type="text" name="numero" class="form-control" value="{{numero}}"
             placeholder="Numero" required=True>
 
@@ -14,27 +17,42 @@
 
     <input type="hidden" value="{{venda.id}}" name="venda_id">
     <br>
-    <button type="submit" class="btn btn-main">Enviar</button>
+    <button type="submit" class="btn btn-main">Enviar</button><br>
   </form>
+    <b>Total: R$ {{ venda.valor }}</b> <br>
+    <b>Desc: R$ {{ venda.desconto }}</b>
+  </div>
+</div>
 {% endblock main %}
 
 {% block extra %}
 
 {% if venda %}
+
+{% if mensagem %}
+  {{ mensagem }}
+{% endif %}
+<div class="row">
+  <div class="col-4">
   <form action="{% url 'vendas:novo_item_pedido' venda.id %}" method="POST">
     {% csrf_token %}
-    {{ form_item }}
+    {{ form_item|bootstrap }}
   <button class="btn btn-info">Incluir</button>
 </form>
+</div>
+</div>
 
+<div class="row">
+  <div class="col-8">
   <h2>Listagem de itens</h2>
   <table class="table">
     <thead>
       <tr>
         <th scope="col">ID</th>
         <th scope="col">Descrição</th>
-        <th scope="col">Quantidade</th>
-        <th scope="col">Desconto</th>
+        <th scope="col">Qtd</th>
+        <th scope="col">Desc</th>
+        <th scope="col">Editar</th>
         <th scope="col">Excluir</th>
       </tr>
     </thead>
@@ -46,11 +64,16 @@
           <td>{{ item.qtd }}</td>
           <td>{{ item.desconto }}</td>
           <td scope="col">
-            <a href="{% url 'vendas:delete_item_pedido' item.id %}">Excluir</a>
+            <a href="{% url 'vendas:edit_item_pedido' item.id %}"><i class="fa fa-pencil"></i></a>
+          </td>
+          <td scope="col">
+            <a href="{% url 'vendas:delete_item_pedido' item.id %}"><i class="fa fa-trash"></i></a>
           </td>
         </tr>
       {% endfor %}
     </tbody>
   </table>
+  </div>
+    </div>
   {% endif %}
 {% endblock extra %}

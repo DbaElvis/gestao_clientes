@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect
 from django.views import View
 from .models import Venda
 from .models import ItemPedido
-from .forms import ItemPedidoForm
+from .forms import ItemPedidoForm, ItemDoPedidoModelForm
 from django.utils.formats import sanitize_separators
 
 class DashboardView(View):
@@ -58,11 +58,17 @@ class NovoItemPedido(View):
 
     def post(self, request, venda):
         data = {}
-        item = ItemPedido.objects.create(
-            produto_id=request.POST['produto_id'],
-            qtd=request.POST['qtd'],
-            desconto=request.POST['desconto'], venda_id=venda
-        )
+        item = ItemPedido.objects.filter(produto_id=request.POST['produto_id'], venda_id=venda)
+        if item:
+            data['mensagem'] = 'Item já incluido na lista de venda'
+            item = item[0]
+        else:
+            item = ItemPedido.objects.create(
+                produto_id=request.POST['produto_id'],
+                qtd=request.POST['qtd'],
+                desconto=request.POST['desconto'], venda_id=venda
+            )
+            
         data['item'] = item
         data['form_item'] = ItemPedidoForm()
         data['numero'] = item.venda.numero
@@ -116,6 +122,23 @@ class DeleteItemPedido(View):
         return redirect('vendas:edit_pedido', venda=venda_id)
 
 
+class EditItemPedido(View):
+    def get(self, request, item):
+        item_pedido = ItemPedido.objects.get(id=item)
+        form = ItemDoPedidoModelForm(instance=item_pedido)
+        return render(
+            request, 'vendas/edit-itempedido.html', {'item_pedido': item_pedido, 'form': form })
+
+    def post(self, request, item):
+        item_pedido = ItemPedido.objects.get(id=item)
+        item_pedido.qtd = request.POST['qtd']
+        item_pedido.desconto = request.POST['desconto']
+
+        item_pedido.save()
+        venda_id = item_pedido.venda.id
+        return redirect('vendas:edit_pedido', venda=venda_id)
+
+
 dash = DashboardView.as_view()
 novo_pedido = NovoPedido.as_view()
 novoItemPedido = NovoItemPedido.as_view()
@@ -123,6 +146,7 @@ listavendas = ListaVendas.as_view()
 edit_Pedido = EditPedido.as_view()
 delete_Pedido = DeletePedido.as_view()
 delete_ItemPedido = DeleteItemPedido.as_view()
+edit_ItemPedido = EditItemPedido.as_view()
 
 
 
